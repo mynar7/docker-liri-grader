@@ -3,29 +3,28 @@ version: '3.6'
 services:
 
   node:
-    # restart: always
+    restart: always
     build:
       context: ./node
-    # for interactive CLI apps using inquirer or servers:
     volumes:
       - './node:/usr/src/app'
       - '/usr/src/app/node_modules'
     # to attach to bash shell:
     # stdin_open: true
     # tty: true
-    # depends_on:
-    #   - mysql
+    depends_on:
+      - mysql
 
-# mysql:
-#     image: mysql:5.7
-#     restart: always
-#     environment:
-#       MYSQL_ROOT_PASSWORD: banana
-#       MYSQL_USER: test
-#       MYSQL_PASSWORD: pass
-#       MYSQL_ROOT_HOST: "%"
-#       MYSQL_DATABASE: my_db
-#     volumes:
-#       - './services/db/schema:/docker-entrypoint-initdb.d'
-# # this will persist data to disk:
-#       - './services/db/data:/var/lib/mysql'
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      # should match student's root pass
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: banana
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: my_db
+    # this runs the student's schema file
+    volumes:
+      - './node:/docker-entrypoint-initdb.d'
