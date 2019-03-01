@@ -26,6 +26,6 @@ RUN npm i
 ### Bamazon HW ###
 ### CMD's second argument should be the customer file
 
-CMD ["node", "index.js"]
+CMD ["node", "bamazoncustomer.js"]
 
 ### end Bamazon HW ###
