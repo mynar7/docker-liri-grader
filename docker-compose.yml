@@ -13,20 +13,28 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "8080:8080"
+      - "3000:3000"
     depends_on:
-      - mysql
+      # - mysql
+      - mongo
 
-  mysql:
-    image: mysql:5.7
+  # mysql:
+  #   image: mysql:5.7
+  #   restart: always
+  #   environment:
+  #     # should match student's root pass
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_USER: banana
+  #     MYSQL_PASSWORD: pass
+  #     MYSQL_ROOT_HOST: "%"
+  #     MYSQL_DATABASE: burgers_db
+  #   # this runs the student's schema file
+  #   volumes:
+  #     - './node:/docker-entrypoint-initdb.d'
+
+  mongo:
+    image: mongo
     restart: always
-    environment:
-      # should match student's root pass
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: banana
-      MYSQL_PASSWORD: pass
-      MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: burgers_db
-    # this runs the student's schema file
-    volumes:
-      - './node:/docker-entrypoint-initdb.d'
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: example
